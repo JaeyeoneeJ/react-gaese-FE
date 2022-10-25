@@ -54,7 +54,7 @@ export const dbUserSlice = createSlice({
     },
     uploadToken: (state, action) => {
       state.token = action.payload;
-      // console.log(state.token)
+      console.log(state.token);
     },
   },
   extraReducers: {
@@ -81,6 +81,7 @@ export const dbUserSlice = createSlice({
 
       // 토큰에 authorization된 access token 값 저장
       state.token = action.payload.headers.authorization;
+      console.log(state.token);
 
       // 로그인이 되었다는 상태 값, true로 변경
       state.isSuccess = true;

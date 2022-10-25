@@ -21,7 +21,7 @@ const LoginPage = () => {
   const [cookies, setCookie] = useCookies(["token"]); // 쿠키 훅
 
   const { token, isSuccess, isLoading } = useSelector((state) => state.dbUser);
-  // console.log(token)
+  console.log(token);
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
@@ -31,20 +31,18 @@ const LoginPage = () => {
     dispatch(__userLogin({ userId, password }));
   };
 
-  // console.log(cookies)
+  const onPageMove = () => {
+    isSuccess && navigate("/");
+    setCookie("token", token);
+    dispatch(clearCheckLogin());
+  };
+
+  console.log(cookies);
   useEffect(() => {
     onPageMove();
     dispatch(uploadToken(cookies.token));
   }, [isLoading]);
-
-  const onPageMove = () => {
-    isSuccess && navigate("/");
-    dispatch(clearCheckLogin());
-  };
-  useEffect(() => {
-    onPageMove();
-  }, [isLoading]);
-
+  console.log("1");
   return (
     <Padding>
       <LogoCtn>
