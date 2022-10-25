@@ -17,11 +17,11 @@ export const __signupUser = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const data = await instance.post("/users/signup", payload, {
-        headers : {
-          'Access-Control-Allow-Origin':'*'
-        }
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+        },
       });
-      console.log(data)
+      console.log(data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -35,10 +35,10 @@ export const __userLogin = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const data = await instance.post("/users/login", payload);
-      
+
       // axios.defaults.headers.common['Authorization'] = 'Bearer ' + data.headers
 
-      console.log(data)
+      console.log(data);
       // console.log(data.headers)
       // console.log(data.headers.authorization)
       // console.log(data.headers['Authorization'])
@@ -54,17 +54,17 @@ export const dbUserSlice = createSlice({
   initialState,
   reducers: {
     clearCheckLogin: (state, action) => {
-      state.isSuccess = false
-    }
+      state.isSuccess = false;
+    },
   },
   extraReducers: {
     [__signupUser.pending]: (state) => {
       state.isLoading = true;
     },
     [__signupUser.fulfilled]: (state, action) => {
-      state.isLoading = false
-      console.log(action)
-      console.log(action.payload)
+      state.isLoading = false;
+      console.log(action);
+      console.log(action.payload);
       state.dbUser = action.payload;
     },
     [__signupUser.rejected]: (state, action) => {
@@ -77,14 +77,13 @@ export const dbUserSlice = createSlice({
       state.isLoading = true;
     },
     [__userLogin.fulfilled]: (state, action) => {
-      state.isLoading = false
+      state.isLoading = false;
       state.msg = action.payload;
-      
-      state.isSuccess = true
-      
+
+      state.isSuccess = true;
+
       // 성공 시, 메세지 경로에요.
-      alert(action.payload)
-      
+      alert(action.payload);
     },
     [__userLogin.rejected]: (state, action) => {
       state.isLoading = false;
@@ -94,9 +93,9 @@ export const dbUserSlice = createSlice({
       // console.log(action.payload.response.data.error)
 
       // 실패 시, 메세지 경로에요.
-      alert(action.payload.response.data.error)
+      alert(action.payload.response.data.error);
     },
-  }
+  },
 });
 
 export const { clearCheckLogin } = dbUserSlice.actions;
