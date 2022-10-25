@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const instance = axios.create({
-  baseURL: "http://localhost:3001",
+export const instance = axios.create({
+  baseURL: process.env.REACT_APP_URL,
 });
 
 export const UserApi = {
@@ -13,7 +13,12 @@ export const UserApi = {
 export const PostsApi = {
   getGaese: () => instance.get("/post/list"),
   getDetailGaese: (postId) => instance.get(`/post/${postId}`),
-  postGaese: (payload) => instance.post("/post", payload),
+  postGaese: (payload) =>
+    instance.post("/posts/write", payload.value, {
+      headers: {
+        Authorization: payload.cookies.token,
+      },
+    }),
   deleteGaesel: (postId) => instance.delete(`/post/${postId}`),
   patchGaese: (postId, edit) =>
     instance.patch(`/posts/${postId}`, { postComment: edit }),

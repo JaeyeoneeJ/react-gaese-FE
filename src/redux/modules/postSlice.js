@@ -33,11 +33,10 @@ export const __getPost = createAsyncThunk(
 export const __addPost = createAsyncThunk(
   "post/addPost",
   async (payload, thunkAPI) => {
-    for (const key of payload.entries()) {
-      console.log(key);
-    }
+    console.log(payload.value);
     try {
       const { data } = await PostsApi.postGaese(payload);
+
       // const data = await axios.post(
       //   "http://localhost:3001/post/write",
       //   payload

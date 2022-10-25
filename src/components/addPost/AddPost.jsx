@@ -7,8 +7,10 @@ import Button from "../elements/Button";
 import { FaImage } from "react-icons/fa";
 import { __addPost, __getPost } from "../../redux/modules/postSlice";
 import { useDropzone } from "react-dropzone";
-
+import { useCookies } from "react-cookie";
 const AddPost = () => {
+  const [cookies] = useCookies(["token"]);
+  console.log(cookies);
   const post = useSelector((state) => state.post);
   const navigate = useNavigate();
   const [value, onChangeHandler, resetValue] = usePost();
@@ -52,24 +54,26 @@ const AddPost = () => {
 
     const formData = new FormData();
     formData.append("file", postPicture[0]);
-    formData.append("postTitle", value.postTitle);
-    formData.append("postContent", value.postContent);
+    value.postPicture = formData;
+
+    // formData.append("postTitle", value.postTitle);
+    // formData.append("postContent", value.postContent);
     for (const key of formData.entries()) {
       console.log(key);
     }
 
-    if (value.postTitle.trim() === "" || value.postContent.trim() === "") {
+    if (value.title.trim() === "" || value.content.trim() === "") {
       return;
     }
 
-    dispatch(__addPost(formData));
+    dispatch(__addPost({ cookies, value }));
 
     if (
       window.confirm(
         `Post가 정상적으로 업로드 되었습니다.\n리스트에서 확인 하시겠습니까?`
       )
     ) {
-      navigate(`/post`);
+      navigate(`/`);
     } else {
       resetValue();
     }
@@ -82,7 +86,7 @@ const AddPost = () => {
   const thumb = postPicture?.map((file) => {
     return (
       <img
-        style={{ width: "200px", height: "200px" }}
+        style={{ width: "100%", objectFit: "cover", height: "auto" }}
         src={file.preview}
         alt="preview-img"
       />
@@ -94,7 +98,6 @@ const AddPost = () => {
         <AddPostHeader>새 포스트 만들기</AddPostHeader>
         <AddPostPicBox {...getRootProps()}>
           <input
-            value={value.postPicture}
             accept="image/*"
             onChange={(e) => encodeFileToBase64(e.target.files[0])}
             type="file"
@@ -122,8 +125,8 @@ const AddPost = () => {
               <AddTodoTitle>제목</AddTodoTitle>
               <AddTodoInput
                 type="text"
-                name="postTitle"
-                value={value.postTitle}
+                name="title"
+                value={value.title}
                 onChange={onChangeHandler}
                 placeholder="제목을 입력해주세요. (50자 이내)"
                 maxLength="50"
@@ -134,8 +137,8 @@ const AddPost = () => {
               <AddTodoTitle>내용</AddTodoTitle>
               <AddTodoTextarea
                 type="text"
-                name="postContent"
-                value={value.postContent}
+                name="content"
+                value={value.content}
                 onChange={onChangeHandler}
                 placeholder="내용을 입력해주세요. (200자 이내)"
                 maxLength="200"
