@@ -5,11 +5,15 @@ import { useNavigate } from "react-router-dom";
 
 const HomeMenu = () => {
   const navigate = useNavigate();
-  
+
   return (
     <HomeMenuCtn>
       <HomeMenuBtn onClick={() => navigate("/login")}>
         <HomeMenuTitle>Login Page 이동</HomeMenuTitle>
+        <FaAngleRight size="30" color="#1a73e8" />
+      </HomeMenuBtn>
+      <HomeMenuBtn onClick={() => navigate("/posts/add")}>
+        <HomeMenuTitle>add post 이동</HomeMenuTitle>
         <FaAngleRight size="30" color="#1a73e8" />
       </HomeMenuBtn>
     </HomeMenuCtn>

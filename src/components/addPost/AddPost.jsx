@@ -1,15 +1,18 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import usePost from "../../hooks/usePost";
 import Button from "../elements/Button";
-import { FaImage } from "react-icons/fa";
+// import { FaImage } from "react-icons/fa";
 import { __addPost, __getPost } from "../../redux/modules/postSlice";
 import { useDropzone } from "react-dropzone";
+import { useCookies } from "react-cookie";
 
 const AddPost = () => {
   const post = useSelector((state) => state.post);
+  const [cookies] = useCookies(["token"]);
+  console.log(cookies);
   const navigate = useNavigate();
   const [value, onChangeHandler, resetValue] = usePost();
   const dispatch = useDispatch();
@@ -69,7 +72,7 @@ const AddPost = () => {
         `Post가 정상적으로 업로드 되었습니다.\n리스트에서 확인 하시겠습니까?`
       )
     ) {
-      navigate(`/post`);
+      navigate(`/`);
     } else {
       resetValue();
     }
@@ -94,7 +97,6 @@ const AddPost = () => {
         <AddPostHeader>새 포스트 만들기</AddPostHeader>
         <AddPostPicBox {...getRootProps()}>
           <input
-            value={value.postPicture}
             accept="image/*"
             onChange={(e) => encodeFileToBase64(e.target.files[0])}
             type="file"
@@ -108,7 +110,8 @@ const AddPost = () => {
           {isup ? (
             <div className="preview">{thumb}</div>
           ) : (
-            <FaImage size={80} color="#d9d9d9" />
+            <div>dd</div>
+            // <FaImage size={80} color="#d9d9d9" />
           )}
 
           <Button width="120px" bgColor="#78A6FF" border="none" color="white">
