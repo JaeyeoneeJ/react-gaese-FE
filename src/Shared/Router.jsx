@@ -4,9 +4,9 @@ import Detail from "../pages/Detail";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import SignUp from "../pages/SignUp";
+import AddPage from "../pages/AddPage";
 
 const Router = () => {
-  
   return (
     <BrowserRouter>
       <Routes>
@@ -14,6 +14,7 @@ const Router = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/post/:id" element={<Detail />} />
+        <Route path="/posts/add" element={<AddPage />} />
       </Routes>
     </BrowserRouter>
   );
