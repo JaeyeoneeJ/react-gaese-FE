@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Button from "../elements/Button";
 import LogoItem from "../elements/LogoItem";
 import useInput from "../../hooks/useInput";
-import { clearCheckLogin, __userLogin } from "../../redux/modules/dbUserSlice";
+import { clearCheckLogin, uploadToken,  __userLogin } from "../../redux/modules/dbUserSlice";
+import { useCookies } from "react-cookie";
 
 const LoginPage = () => {
     const navigate = useNavigate();
@@ -13,7 +14,11 @@ const LoginPage = () => {
     const [userId, setUserId] = useInput();
     const [password, setPassword] = useInput();
 
-    const {isSuccess, isLoading} = useSelector((state)=>state.dbUser)
+    const [cookies, setCookie] = useCookies(['token']) // 쿠키 훅
+
+    const {token, isSuccess, isLoading} = useSelector((state)=>state.dbUser)
+    // console.log(token)
+
     const onSubmitHandler = (e) => {
         e.preventDefault();
         if (userId.trim() === "" || password.trim() === "") {
@@ -24,10 +29,15 @@ const LoginPage = () => {
 
     const onPageMove = () => {
         isSuccess && navigate('/')
+        setCookie('token', token)
         dispatch(clearCheckLogin())
     }
+    
+    
+    // console.log(cookies)
     useEffect(()=>{
         onPageMove()
+        dispatch(uploadToken(cookies.token))
     },[isLoading])
 
     return (

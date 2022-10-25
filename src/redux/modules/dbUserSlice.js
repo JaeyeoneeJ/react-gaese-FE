@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
 import { instance } from "../instance";
+// import axios from "axios";
 
 const initialState = {
   dbUser: [],
@@ -8,7 +8,10 @@ const initialState = {
   isSuccess: false,
   error: null,
   msg: null,
+  token: "",
 };
+
+// axios 전역 변수 설정
 // axios.defaults.withCredentials = true;
 
 // 1. 회원가입 post('/users/signup')
@@ -34,15 +37,8 @@ export const __userLogin = createAsyncThunk(
   "dbUser/userLogin",
   async (payload, thunkAPI) => {
     try {
-      const data = await instance.post("/users/login", payload);
-      
-      // axios.defaults.headers.common['Authorization'] = 'Bearer ' + data.headers
-
-      console.log(data)
-      // console.log(data.headers)
-      // console.log(data.headers.authorization)
-      // console.log(data.headers['Authorization'])
-      return thunkAPI.fulfillWithValue(data.data);
+      const data = await instance.post("/users/login", payload)
+      return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -53,8 +49,12 @@ export const dbUserSlice = createSlice({
   name: "dbUser",
   initialState,
   reducers: {
-    clearCheckLogin: (state, action) => {
+    clearCheckLogin: (state) => {
       state.isSuccess = false
+    },
+    uploadToken: (state, action) => {
+      state.token = action.payload
+      // console.log(state.token)
     }
   },
   extraReducers: {
@@ -78,26 +78,33 @@ export const dbUserSlice = createSlice({
     },
     [__userLogin.fulfilled]: (state, action) => {
       state.isLoading = false
-      state.msg = action.payload;
+
+      // 토큰에 authorization된 access token 값 저장
+      state.token = action.payload.headers.authorization
       
+      // 로그인이 되었다는 상태 값, true로 변경
       state.isSuccess = true
       
       // 성공 시, 메세지 경로에요.
-      alert(action.payload)
+      // response가 정상적으로 통신된 경우 발생하는 메세지 값
+      state.msg = action.payload.data;
+      alert(state.msg)
       
     },
     [__userLogin.rejected]: (state, action) => {
       state.isLoading = false;
+      
+      // 실패 시, 메세지 경로에요.
+      state.msg = action.payload.response.data.error
+      alert(state.msg)
+
       // console.log(action.payload)
       // console.log(action.payload.response)
       // console.log(action.payload.response.data)
       // console.log(action.payload.response.data.error)
-
-      // 실패 시, 메세지 경로에요.
-      alert(action.payload.response.data.error)
     },
   }
 });
 
-export const { clearCheckLogin } = dbUserSlice.actions;
+export const { clearCheckLogin, uploadToken } = dbUserSlice.actions;
 export default dbUserSlice.reducer;
