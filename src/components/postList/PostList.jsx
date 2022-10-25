@@ -26,7 +26,7 @@ const PostListJJY = () => {
                     strokeWidth='3'
                 />
                 <Button
-                    onClick={() => navigate('/todos/add')}
+                    onClick={() => navigate('/posts/add')}
                     width="80%"
                     maxWidth="300px"
                     bgColor="#d9d9d9"

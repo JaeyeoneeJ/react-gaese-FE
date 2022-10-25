@@ -79,10 +79,6 @@ const AddPost = () => {
     }
   };
 
-  useEffect(() => {
-    dispatch(__getPost());
-  }, []);
-
   const thumb = postPicture?.map((file) => {
     return (
       <img
