@@ -5,7 +5,7 @@ import styled from "styled-components";
 import Button from "../elements/Button";
 import LogoItem from "../elements/LogoItem";
 import useInput from "../../hooks/useInput";
-import { __userLogin } from "../../redux/modules/dbUserSlice";
+import { clearCheckLogin, __userLogin } from "../../redux/modules/dbUserSlice";
 
 const LoginPage = () => {
     const navigate = useNavigate();
@@ -13,9 +13,7 @@ const LoginPage = () => {
     const [userId, setUserId] = useInput();
     const [password, setPassword] = useInput();
 
-    const {isLoading, dbUser, msg} = useSelector((state)=>state.dbUser)
-    const [message, setMessage] = useState(msg)
-    console.log(`msg: ${msg}, message: ${message}`)
+    const {isSuccess, isLoading} = useSelector((state)=>state.dbUser)
     const onSubmitHandler = (e) => {
         e.preventDefault();
         if (userId.trim() === "" || password.trim() === "") {
@@ -24,24 +22,13 @@ const LoginPage = () => {
         dispatch(__userLogin({userId, password}))
     };
 
-    const onClickLoginBtn = async () => {
-        setMessage(msg)
-        if (message === null) {
-            return;
-        } else {
-            alert(message)
-        }
-        
-        setMessage(null)
-        // setMessage(msg)
-        // if (message !== null) {
-        //     alert(message)
-        //     setMessage(null)
-        // }
+    const onPageMove = () => {
+        isSuccess && navigate('/')
+        dispatch(clearCheckLogin())
     }
     useEffect(()=>{
-        onClickLoginBtn()
-    },[dispatch])
+        onPageMove()
+    },[isLoading])
 
     return (
         <Padding>

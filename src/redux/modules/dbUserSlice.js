@@ -8,7 +8,6 @@ const initialState = {
   isSuccess: false,
   error: null,
   msg: null,
-  response: {}
 };
 // axios.defaults.withCredentials = true;
 
@@ -54,6 +53,9 @@ export const dbUserSlice = createSlice({
   name: "dbUser",
   initialState,
   reducers: {
+    clearCheckLogin: (state, action) => {
+      state.isSuccess = false
+    }
   },
   extraReducers: {
     [__signupUser.pending]: (state) => {
@@ -76,17 +78,13 @@ export const dbUserSlice = createSlice({
     },
     [__userLogin.fulfilled]: (state, action) => {
       state.isLoading = false
-
-      console.log(action)
-      // if (action.payload === "로그인 성공") {
-      //   console.log("fe: 로그인이 됐다고 하네요")
-      // } else if (action.payload === "일치하는 회원정보가 없습니다.") {
-      //   console.log("fe: 아이디와 비밀번호를 확인해주세요.")
-      // } else {
-      //   console.log("fe: 뭐라는거임?")
-      // }
-
       state.msg = action.payload;
+      
+      state.isSuccess = true
+      
+      // 성공 시, 메세지 경로에요.
+      alert(action.payload)
+      
     },
     [__userLogin.rejected]: (state, action) => {
       state.isLoading = false;
@@ -94,10 +92,12 @@ export const dbUserSlice = createSlice({
       // console.log(action.payload.response)
       // console.log(action.payload.response.data)
       // console.log(action.payload.response.data.error)
-      state.response = action.payload.response
+
+      // 실패 시, 메세지 경로에요.
+      alert(action.payload.response.data.error)
     },
   }
 });
 
-export const { } = dbUserSlice.actions;
+export const { clearCheckLogin } = dbUserSlice.actions;
 export default dbUserSlice.reducer;
