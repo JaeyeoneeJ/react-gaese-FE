@@ -1,5 +1,5 @@
-import React from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Button from "../elements/Button";
@@ -11,8 +11,11 @@ const LoginPage = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [userId, setUserId] = useInput();
-    const [password, setPassword] = useInput();   
+    const [password, setPassword] = useInput();
 
+    const {isLoading, dbUser, msg} = useSelector((state)=>state.dbUser)
+    const [message, setMessage] = useState(msg)
+    console.log(`msg: ${msg}, message: ${message}`)
     const onSubmitHandler = (e) => {
         e.preventDefault();
         if (userId.trim() === "" || password.trim() === "") {
@@ -20,6 +23,25 @@ const LoginPage = () => {
         }
         dispatch(__userLogin({userId, password}))
     };
+
+    const onClickLoginBtn = async () => {
+        setMessage(msg)
+        if (message === null) {
+            return;
+        } else {
+            alert(message)
+        }
+        
+        setMessage(null)
+        // setMessage(msg)
+        // if (message !== null) {
+        //     alert(message)
+        //     setMessage(null)
+        // }
+    }
+    useEffect(()=>{
+        onClickLoginBtn()
+    },[dispatch])
 
     return (
         <Padding>
