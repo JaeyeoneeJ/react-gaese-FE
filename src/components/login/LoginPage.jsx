@@ -1,61 +1,25 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Button from "../elements/Button";
 import LogoItem from "../elements/LogoItem";
 import useInput from "../../hooks/useInput";
-import { __getUsers } from "../../redux/modules/usersSlice";
-import Loading from "../feature/Loading";
-import { __checkLoginUser, __getLoginUser, __LoginUser } from "../../redux/modules/loginUserSlice";
 import { __userLogin } from "../../redux/modules/dbUserSlice";
 
 const LoginPage = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const [userId, setUserId, resetUserId] = useInput();
-    const [password, setPassword, resetPassword] = useInput();
-    const {users} = useSelector((state)=>state.users)
-    // const {isLoading, loginUser, error } = useSelector((state)=>state.loginUser)
-
-    
+    const [userId, setUserId] = useInput();
+    const [password, setPassword] = useInput();   
 
     const onSubmitHandler = (e) => {
         e.preventDefault();
         if (userId.trim() === "" || password.trim() === "") {
             return;
         }
-        
-        // const [filterUserState] = users.filter((user)=>{
-        //     return user.userId === userId
-        // })
-        
-        // if (filterUserState?.length !== 0 && +password === +filterUserState?.password) {
-        //     alert(`${filterUserState.nickname}님, 환영합니다.`)
-        //     dispatch(__checkLoginUser(filterUserState))
-        //     navigate("/");
-        // } else {
-        //     alert('ID 또는 Password를 확인해주세요.')
-        // }
         dispatch(__userLogin({userId, password}))
     };
-
-    useEffect(() => {
-        
-        
-    }, []);
-    // console.log(users)
-    // if (loginUser?.userId !== undefined) {
-    //     alert('이미 로그인 되어있습니다.')
-    //     return navigate('/')
-    // }
-    // if (isLoading) {
-    //     return <Loading />
-    // }
-
-    // if (error) {
-    //     return <div>{error.message}</div>
-    // }
 
     return (
         <Padding>
