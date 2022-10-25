@@ -1,12 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 import dbUser from "../modules/dbUserSlice";
-import posts from "../modules/dbPostsSlice";
 import post from "../modules/postSlice";
+import posts from "../modules/dbPostsSlice";
+
+
 const store = configureStore({
   reducer: {
     dbUser,
-    post,
     posts,
+    post,
   },
 });
 
