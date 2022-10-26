@@ -1,11 +1,12 @@
 import React from "react";
 import Layout from "../components/layout/Layout";
-// import HomeMenu from "../components/homeMenu/HomeMenu";
 import PostList from "../components/postList/PostList";
+import Header from "../components/header/Header";
 
 const Home = () => {
   return (
     <>
+      {/* <Header /> */}
       <Layout>
         <PostList />
       </Layout>

@@ -1,9 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { instance } from "../instance";
-// import axios from "axios";
+import axios from "axios";
 
 const initialState = {
   dbUser: [],
+  loginUser: {},
   isLoading: false,
   isSuccess: false,
   error: null,
@@ -37,8 +38,10 @@ export const __userLogin = createAsyncThunk(
   "dbUser/userLogin",
   async (payload, thunkAPI) => {
     try {
-      const data = await instance.post("/users/login", payload);
       console.log(data)
+      console.log(payload)
+      const data = await instance.post("/users/login", payload);
+      // const data = await axios.post("http://3.34.143.16/users/login", payload);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -96,6 +99,7 @@ export const dbUserSlice = createSlice({
       state.isLoading = false;
 
       // 실패 시, 메세지 경로에요.
+      console.log(action.payload)
       state.msg = action.payload.response.data.error;
       alert(state.msg);
 

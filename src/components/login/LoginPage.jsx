@@ -21,7 +21,6 @@ const LoginPage = () => {
   const [cookies, setCookie] = useCookies(["token"]); // 쿠키 훅
 
   const { token, isSuccess, isLoading } = useSelector((state) => state.dbUser);
-  console.log(token);
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
@@ -42,7 +41,7 @@ const LoginPage = () => {
     onPageMove();
     dispatch(uploadToken(cookies.token));
   }, [isLoading]);
-  console.log("1");
+
   return (
     <Padding>
       <LogoCtn>

@@ -14,7 +14,9 @@ export const __getPosts = createAsyncThunk(
   "posts/getPosts",
   async (payload, thunkAPI) => {
     try {
+      console.log(1)
       const data = await instance.get("/posts/list");
+      console.log(data)
       // const data = await axios.get("http://3.34.143.16/posts/list");
       return thunkAPI.fulfillWithValue(data.data.data);
 
@@ -59,6 +61,7 @@ export const postsSlice = createSlice({
     [__getPosts.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
+      console.log(state.error)
     },
     [__getPost.pending]: (state) => {
       state.isLoading = true;
