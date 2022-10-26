@@ -83,6 +83,7 @@ export const dbUserSlice = createSlice({
     },
     [__signupUser.fulfilled]: (state, action) => {
       state.isLoading = false;
+      state.isSuccess = true
       console.log(action);
       console.log(action.payload);
       // state.dbUser = action.payload;

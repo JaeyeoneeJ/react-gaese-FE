@@ -1,5 +1,6 @@
-import React from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import useInput from "../../hooks/useInput";
 import { __signupUser } from "../../redux/modules/dbUserSlice";
@@ -7,12 +8,29 @@ import Button from "../elements/Button";
 
 const SignUpPage = () => {
     const dispatch = useDispatch();
-
+    const navigate = useNavigate()
+    const {isSuccess} = useSelector((state)=>state.dbUser)
+    
     const [userId, setUserId] = useInput();
     const [nickname, setNickname] = useInput();
     const [password, setPassword] = useInput();
     const [confirm, setConfirm] = useInput();
 
+    // // ID, 비밀번호, 비밀번호 확인
+    // const [userId, setUserId] = userState<string>('')
+    // const [password, setPasswork] = userState<string>('')
+    // const [confirm, setConfirm] = userState<string>('')
+
+    // // 오류메세지 상태 저장
+    // const [userIdMessage, setUserIdMessage] = useState<string>('')
+    // const [passwordMessage, setPasswordMessage] = useState<string>('')
+    // const [confirmMessage, setConfirmMessage] = useState<string>('')
+
+    // // ID
+    // const onChangeId = () => {
+    //     setUserId
+    // }
+    
     const onSubmitHandler = (e) => {
         e.preventDefault();
         if (userId.trim() === "" || nickname.trim() === "" || password.trim() === "" || confirm.trim() === "") {
@@ -28,6 +46,13 @@ const SignUpPage = () => {
             dispatch(__signupUser({userId, nickname, password}));
         }
     }
+
+    useEffect(()=> {
+        if (isSuccess) {
+            alert('회원가입이 완료되었습니다. 로그인 페이지로 이동합니다.')
+            return navigate('/login')
+        }
+    })
 
     return (
         <Padding20>
@@ -111,7 +136,7 @@ const Padding20 = styled.div`
     padding: 20px;
 `;
 const Title = styled.div`
-    margin: 30px auto 0 auto;
+    margin: 85px auto 0 auto;
     display: flex;
     gap: 30px;
     align-items: center;

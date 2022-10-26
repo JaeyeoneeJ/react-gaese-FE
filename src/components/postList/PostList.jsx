@@ -52,7 +52,7 @@ const Padding = styled.div`
 `;
 
 const LogoCtn = styled.div`
-    margin: 0px auto 10px auto;
+    margin: 55px auto 10px auto;
     display: flex;
     flex-direction: column;
     gap: 20px;

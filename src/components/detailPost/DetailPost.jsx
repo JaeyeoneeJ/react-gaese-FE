@@ -15,6 +15,7 @@ const DetailPost = () => {
 
     // 현재 포스트의 id
     const { id } = useParams()
+    console.log(id)
 
 
 

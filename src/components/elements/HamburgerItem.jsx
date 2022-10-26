@@ -1,9 +1,10 @@
 import React from 'react'
+import styled from 'styled-components'
 import { ReactComponent as Hamburger } from '../../assets/hamburger.svg'
 
 const HamburgerItem = ({stroke='black', size='24', strokeWidth='2'}) => {
     return (
-        <div>
+        <Ctn>
             <Hamburger
                 stroke={stroke}
                 strokeWidth={strokeWidth}
@@ -11,8 +12,13 @@ const HamburgerItem = ({stroke='black', size='24', strokeWidth='2'}) => {
                 height={size}
             >
             </Hamburger>
-        </div>
+        </Ctn>
     )
 }
+
+const Ctn = styled.div`
+    display: flex;
+    align-items: center;
+`
 
 export default HamburgerItem

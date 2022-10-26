@@ -39,9 +39,15 @@ const Header = () => {
                     </LogoName>
                 </Box>
                 <Box>
-                    {(isLogin) && <UserStateHeader
+                    {(isLogin) ? <UserStateHeader
                             cookies={cookies}
-                        />}
+                        /> : (
+                        <LoginBtn
+                            onClick={()=>navigate("/login")}
+                        >
+                            GO TO LOGIN
+                        </LoginBtn>
+                    )}
                 </Box>
             </HeaderBox>
         </HeaderCtn>
@@ -49,9 +55,12 @@ const Header = () => {
 }
 
 const HeaderCtn = styled.div`
+    z-index: 2;
+    position: fixed;
+    width: 100%;
     border-bottom: 2px solid #ddd;
     background-color: #CCECDD;
-    box-shadow: 0 -1px 5px 1px rgba(0,0,0,0.2);
+    box-shadow: 0 0px 5px 1px rgba(0,0,0,0.2);
 `
 const HeaderBox = styled.div`
     margin: 0 auto;
@@ -78,6 +87,13 @@ const LogoName = styled.div`
     @media screen and (max-width: 500px) {
         display: none;
     }
+`
+const LoginBtn = styled.div`
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    gap: 5px;
+    color: white;
 `
 
 export default Header
