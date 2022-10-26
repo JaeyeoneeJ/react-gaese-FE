@@ -17,6 +17,7 @@ const PostListJJY = () => {
     dispatch(__getPosts());
   }, []);
 
+<<<<<<< HEAD
   return (
     <Padding>
       <LogoCtn>
@@ -41,6 +42,36 @@ const PostListJJY = () => {
       </PostListCtn>
     </Padding>
   );
+=======
+    return (
+        <Padding>
+            <LogoCtn>
+                <LogoItem
+                    stroke="#CCECDD"
+                    size="80"
+                    strokeWidth='3'
+                />
+                <Button
+                    onClick={() => navigate('/posts/add')}
+                    width="80%"
+                    maxWidth="300px"
+                    bgColor="#d9d9d9"
+                    border="2px solid #C5C5C5"
+                    fontSize="16px"
+                    color="white"
+                >
+                    Click To Posting!!!
+                </Button>
+            </LogoCtn>
+            <PostListCtn>
+                {/* {posts?.slice(0).reverse().map((post)=>{ */}
+                {posts?.map((post) => {
+                    return <Post key={post.postId} post={post} />
+                })}
+            </PostListCtn>
+        </Padding>
+    );
+>>>>>>> 0a442a0ce3bb8428240c388849b460911d7f07f8
 };
 const Padding = styled.div`
   margin: 0 auto;

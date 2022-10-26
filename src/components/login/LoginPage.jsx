@@ -7,7 +7,6 @@ import LogoItem from "../elements/LogoItem";
 import useInput from "../../hooks/useInput";
 import {
   clearCheckLogin,
-  uploadToken,
   __userLogin,
 } from "../../redux/modules/dbUserSlice";
 import { useCookies } from "react-cookie";
@@ -19,9 +18,9 @@ const LoginPage = () => {
   const [password, setPassword] = useInput();
 
   const [cookies, setCookie] = useCookies(["token"]); // 쿠키 훅
+  const [userIdCookies, setUserIdCookie] = useCookies(["userId"]); // 쿠키 훅
 
   const { token, isSuccess, isLoading } = useSelector((state) => state.dbUser);
-  console.log(token);
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
@@ -31,18 +30,19 @@ const LoginPage = () => {
     dispatch(__userLogin({ userId, password }));
   };
 
-  const onPageMove = () => {
-    isSuccess && navigate("/");
-    setCookie("token", token);
-    dispatch(clearCheckLogin());
-  };
-
-  console.log(cookies);
   useEffect(() => {
-    onPageMove();
-    dispatch(uploadToken(cookies.token));
+    if (cookies !== undefined && cookies.token?.length > 15) {
+      alert("이미 로그인 되어 있습니다. 메인 페이지로 이동합니다.")
+      return navigate("/")
+    }
+    if (isSuccess) {
+      setCookie("token", token);
+      setUserIdCookie("userId", userId)
+      dispatch(clearCheckLogin());
+      return navigate("/");
+    }
   }, [isLoading]);
-  console.log("1");
+
   return (
     <Padding>
       <LogoCtn>
