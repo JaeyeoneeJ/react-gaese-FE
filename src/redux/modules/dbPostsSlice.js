@@ -14,8 +14,8 @@ export const __getPosts = createAsyncThunk(
   "posts/getPosts",
   async (payload, thunkAPI) => {
     try {
-      // const data = await instance.get("/posts/list");
-      const data = await axios.get("http://3.34.143.16/posts/list");
+      const data = await instance.get("/posts/list");
+      // const data = await axios.get("http://3.34.143.16/posts/list");
       return thunkAPI.fulfillWithValue(data.data.data);
 
     } catch (error) {
