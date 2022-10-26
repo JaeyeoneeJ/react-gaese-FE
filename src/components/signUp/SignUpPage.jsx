@@ -11,10 +11,10 @@ const SignUpPage = () => {
     const navigate = useNavigate()
     const {isSuccess} = useSelector((state)=>state.dbUser)
 
-    const [userId, setUserId] = useInput();
-    const [nickname, setNickname] = useInput();
-    const [password, setPassword] = useInput();
-    const [confirm, setConfirm] = useInput();
+  const [userId, setUserId] = useInput();
+  const [nickname, setNickname] = useInput();
+  const [password, setPassword] = useInput();
+  const [confirm, setConfirm] = useInput();
 
     // // ID, 비밀번호, 비밀번호 확인
     // const [userId, setUserId] = userState<string>('')
@@ -42,15 +42,15 @@ const SignUpPage = () => {
             return;
         }
 
-        if (password !== confirm) {
-            alert('Password가 일치하지 않습니다.')
-            return;
-        }
-        
-        if (window.confirm('회원가입 하시겠습니까?')) {
-            dispatch(__signupUser({userId, nickname, password}));
-        }
+    if (password !== confirm) {
+      alert("Password가 일치하지 않습니다.");
+      return;
     }
+
+    if (window.confirm("회원가입 하시겠습니까?")) {
+      dispatch(__signupUser({ userId, nickname, password }));
+    }
+  };
 
     useEffect(()=> {
         if (isSuccess) {
@@ -118,27 +118,27 @@ const SignUpPage = () => {
                         </InputArea>
                     </LoginCtnArea>
 
-                    <Button
-                        type="submit"
-                        border="none"
-                        bgColor="#D9D9D9"
-                        color="white"
-                        fontSize="24px"
-                        fontWeight="700"
-                        width="100%"
-                        padding="10px"
-                    >
-                        회원가입 하기
-                    </Button>
-                </LoginBox>
-            </SignUpCtn>
-        </Padding20>
-    );
+          <Button
+            type="submit"
+            border="none"
+            bgColor="#D9D9D9"
+            color="white"
+            fontSize="24px"
+            fontWeight="700"
+            width="100%"
+            padding="10px"
+          >
+            회원가입 하기
+          </Button>
+        </LoginBox>
+      </SignUpCtn>
+    </Padding20>
+  );
 };
 
 const Padding20 = styled.div`
-    margin: 0 auto;
-    padding: 20px;
+  margin: 0 auto;
+  padding: 20px;
 `;
 const Title = styled.div`
     margin: 85px auto 0 auto;
@@ -153,7 +153,7 @@ const Title = styled.div`
 
 const SignUpCtn = styled.div`
   margin: 50px auto 0 auto;
-  border: 1px solid #CCECDD;
+  border: 1px solid #ccecdd;
   border-radius: 30px;
   max-width: 600px;
   box-shadow: 5px 9px 10px 0px rgba(0, 0, 0, 0.2);
@@ -190,11 +190,11 @@ const InputArea = styled.div`
   font-size: 14px;
   display: flex;
   gap: 10px;
-`
+`;
 const Input = styled.input`
-    width: 100%;
-    /* background-color: red; */
-    border: none;
+  width: 100%;
+  /* background-color: red; */
+  border: none;
 `;
 
 export default SignUpPage;

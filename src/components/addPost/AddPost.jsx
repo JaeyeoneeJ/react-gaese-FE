@@ -36,28 +36,28 @@ const AddPost = () => {
     onDrop,
   });
 
-  const encodeFileToBase64 = (fileBlob) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(fileBlob);
-    return new Promise((resolve) => {
-      reader.onload = () => {
-        setImageSrc(reader.result);
-        console.log(reader);
-        resolve();
-      };
-    });
-  };
+  // const encodeFileToBase64 = (fileBlob) => {
+  //   const reader = new FileReader();
+  //   reader.readAsDataURL(fileBlob);
+  //   return new Promise((resolve) => {
+  //     reader.onload = () => {
+  //       setImageSrc(reader.result);
+  //       console.log(reader);
+  //       resolve();
+  //     };
+  //   });
+  // };
 
   //파일 이미지 업로드 핸들러
   const onSubmitHandler = (e) => {
     e.preventDefault();
 
     const formData = new FormData();
-    formData.append("file", postPicture[0]);
-    value.postPicture = formData;
 
-    // formData.append("postTitle", value.postTitle);
-    // formData.append("postContent", value.postContent);
+    formData.append("postPicture", postPicture[0]);
+
+    formData.append("title", value.title);
+    formData.append("content", value.content);
     for (const key of formData.entries()) {
       console.log(key);
     }
@@ -65,8 +65,8 @@ const AddPost = () => {
     if (value.title.trim() === "" || value.content.trim() === "") {
       return;
     }
-    console.log(value)
-    dispatch(__addPost({ cookies, value }));
+
+    dispatch(__addPost({ cookies, formData }));
 
     if (
       window.confirm(
@@ -95,7 +95,7 @@ const AddPost = () => {
         <AddPostPicBox {...getRootProps()}>
           <input
             accept="image/*"
-            onChange={(e) => encodeFileToBase64(e.target.files[0])}
+            // onChange={(e) => encodeFileToBase64(e.target.files[0])}
             type="file"
             {...getInputProps()}
           />
