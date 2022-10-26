@@ -17,7 +17,6 @@ const PostListJJY = () => {
     dispatch(__getPosts());
   }, []);
 
-<<<<<<< HEAD
   return (
     <Padding>
       <LogoCtn>
