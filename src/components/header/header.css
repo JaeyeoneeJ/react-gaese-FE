@@ -1,0 +1,4 @@
+.navigate:hover {
+    transition: all, 0.3s;
+    cursor: pointer;
+}
