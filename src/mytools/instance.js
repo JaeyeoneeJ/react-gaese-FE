@@ -17,6 +17,7 @@ export const PostsApi = {
   postGaese: (payload) =>
     instance.post("/posts/write", payload.value, {
       headers: {
+        "Content-Type": "multipart/form-data",
         Authorization: payload.cookies.token,
       },
     }),

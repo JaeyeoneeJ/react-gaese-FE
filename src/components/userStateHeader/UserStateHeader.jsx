@@ -17,10 +17,10 @@ const UserStateHeader = ({cookies}) => {
     const [isClick, setIsClick] = useState(false)
     console.log(loginUser?.userInfo)
     
-    // user정보의 이미지가 null 값이면 더미 이미지 씌우기
+    
     
 
-    
+    // user정보의 이미지가 null 값이면 더미 이미지 씌우기
     useEffect(()=> {
         dispatch(__getUser(cookies))
         if (loginUser?.userInfo?.image === null || loginUser?.userInfo?.image === undefined) {

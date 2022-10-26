@@ -10,7 +10,7 @@ const SignUpPage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate()
     const {isSuccess} = useSelector((state)=>state.dbUser)
-    
+
     const [userId, setUserId] = useInput();
     const [nickname, setNickname] = useInput();
     const [password, setPassword] = useInput();
@@ -25,6 +25,11 @@ const SignUpPage = () => {
     // const [userIdMessage, setUserIdMessage] = useState<string>('')
     // const [passwordMessage, setPasswordMessage] = useState<string>('')
     // const [confirmMessage, setConfirmMessage] = useState<string>('')
+
+    // // 유효성 검사
+    // const [isUserId, setIsUserId] = useState<boolean>(false)
+    // const [isPassword, setIsPassword] = useState<boolean>(false)
+    // const [isConfirm, setIsConfirm] = useState<boolean>(false)
 
     // // ID
     // const onChangeId = () => {

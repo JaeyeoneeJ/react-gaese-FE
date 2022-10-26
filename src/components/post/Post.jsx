@@ -7,16 +7,17 @@ import useTimeSet from "../../hooks/useTimeSet";
 
 
 const Post = ({post}) => {
-    const navigate = useNavigate()
+    const navigate = useNavigate()    
     
-    // 업로드 시간 가공
-    
-    
+    const [postImg, setPostImg] = useState(post.postPicture)
+    if (post.postPicture === null || post.postPicture === undefined) {
+        setPostImg("https://placeimg.com/1000/1000/nature")
+    }
     return (
         <PostBox>
             <ImgBox onClick={()=>navigate(`/post/${post.postId}`)}>
-                {/* <PostPic src={post.postPicture} alt={post.id} /> */}
-                <PostPic src="https://placeimg.com/1000/1000/nature" alt={post.postId} />
+                <PostPic src={postImg} alt={post.id} />
+                {/* <PostPic src="https://placeimg.com/1000/1000/nature" alt={post.postId} /> */}
             </ImgBox>
             <PostCtn>
                 <PostHeader>

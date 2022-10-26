@@ -26,64 +26,73 @@ const DetailPost = () => {
 
     return (
         <Padding>
-            <PostBox>
-                <BoxHeader>
-                    <Box>
-                        <UserPic
-                            onClick={()=>navigate(`/profile/${post.userId}`)}
-                            // src={post.userPic}
-                            src="https://placeimg.com/100/100/person"
-                            alt="userProfile"
-                        />
-                        <FontSize16>@{post.nickname}</FontSize16>
-                    </Box>
-                    <Box>
-                        <Time>{useTimeSet(post.createdAt)}</Time>
-                    </Box>
-                </BoxHeader>
-                {/* <PostPic src={post.postPicture} alt={post.id} /> */}
-                <PostPic src="https://placeimg.com/1000/1000/nature" alt="Post's Picture" />
-                <PostCtn>
-                    <PostHeader>
-                        <PostTitle>{post.title}</PostTitle>
+            <Ctn>
+                <PostBox>
+                    <BoxHeader>
                         <Box>
-                            <FaRegHeart
-                                color="tomato"
-                                strokeWidth={1}
+                            <UserPic
+                                onClick={()=>navigate(`/profile/${post.userId}`)}
+                                // src={post.userPic}
+                                src="https://placeimg.com/100/100/person"
+                                alt="userProfile"
                             />
-                            <FontSize16>
-                                {/* {post.totalLike} */}
-                                {"0"}
-                            </FontSize16>
+                            <FontSize16>@{post.nickname}</FontSize16>
                         </Box>
-                    </PostHeader>
-                    <PostContent>
-                        {post.content}
-                    </PostContent>
-                </PostCtn>
-            </PostBox>
-            <CommentCtn onClick={()=>setIsOn(!isOn)}>
-                <CommentName>
-                    <FaRegCommentDots size={24} /> 댓글 보기
-                </CommentName>
-                {isOn && 
-                    <CommentBox>
-                        <DummyBox>Comment Area</DummyBox>
-                    </CommentBox>
-                }
-            </CommentCtn>
+                        <Box>
+                            <Time>{useTimeSet(post.createdAt)}</Time>
+                        </Box>
+                    </BoxHeader>
+                    {/* <PostPic src={post.postPicture} alt={post.id} /> */}
+                    <PostPic src="https://placeimg.com/1000/1000/nature" alt="Post's Picture" />
+                    <PostCtn>
+                        <PostHeader>
+                            <PostTitle>{post.title}</PostTitle>
+                            <Box>
+                                <FaRegHeart
+                                    color="tomato"
+                                    strokeWidth={1}
+                                />
+                                <FontSize16>
+                                    {/* {post.totalLike} */}
+                                    {"0"}
+                                </FontSize16>
+                            </Box>
+                        </PostHeader>
+                        <PostContent>
+                            {post.content}
+                        </PostContent>
+                    </PostCtn>
+                </PostBox>
+                <CommentCtn onClick={()=>setIsOn(!isOn)}>
+                    <CommentName>
+                        <FaRegCommentDots size={24} /> 댓글 보기
+                    </CommentName>
+                    {isOn && 
+                        <CommentBox>
+                            <DummyBox>Comment Area</DummyBox>
+                        </CommentBox>
+                    }
+                </CommentCtn>
+            </Ctn>
         </Padding>
     )
 }
 
 const Padding = styled.div`
     padding: 20px;
-    margin: 30px auto 30px auto;
+    margin: 0px auto 30px auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 `;
+const Ctn = styled.div`
+    margin-top: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+`
 const PostBox = styled.div`
     border: 1px solid #D9D9D9;
     border-radius: 10px;

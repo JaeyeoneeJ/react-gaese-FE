@@ -65,7 +65,7 @@ const AddPost = () => {
     if (value.title.trim() === "" || value.content.trim() === "") {
       return;
     }
-
+    console.log(value)
     dispatch(__addPost({ cookies, value }));
 
     if (
@@ -155,7 +155,7 @@ const Padding = styled.div`
   padding: 20px;
 `;
 const AddPostBox = styled.div`
-  margin: 30px auto 0 auto;
+  margin: 75px auto 0 auto;
   border: 1px solid #d9d9d9;
   border-radius: 30px;
   max-width: 600px;

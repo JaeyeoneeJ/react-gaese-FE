@@ -1,16 +1,16 @@
 import React from "react";
 import Header from "../components/header/Header";
 import Layout from "../components/layout/Layout";
-import LoginPage from "../components/login/LoginPage";
+import UserProfile from "../components/userProfile/UserProfile";
 
-const Login = () => {
+const Profile = () => {
   return (
     <>
       <Header />
       <Layout>
-        <LoginPage />
+        <UserProfile />
       </Layout>
     </>
   );
 };
-export default Login;
+export default Profile;
