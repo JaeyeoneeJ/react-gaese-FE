@@ -30,19 +30,17 @@ const LoginPage = () => {
     dispatch(__userLogin({ userId, password }));
   };
 
-  const onPageMove = () => {
-    isSuccess && navigate("/");
-    setCookie("token", token);
-    setUserIdCookie("userId", userId)
-    dispatch(clearCheckLogin());
-  };
-  
   useEffect(() => {
     if (cookies !== undefined && cookies.token?.length > 15) {
       alert("이미 로그인 되어 있습니다. 메인 페이지로 이동합니다.")
       return navigate("/")
     }
-    onPageMove();
+    if (isSuccess) {
+      setCookie("token", token);
+      setUserIdCookie("userId", userId)
+      dispatch(clearCheckLogin());
+      return navigate("/");
+    }
   }, [isLoading]);
 
   return (

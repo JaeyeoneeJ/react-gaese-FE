@@ -33,7 +33,7 @@ const UserStateHeader = ({cookies}) => {
                 <Username>@{loginUser?.userInfo?.userId}</Username>
             </UserInfo>
             <UserPic
-                onClick={() => navigate(`/profile/${"userId"}`)}
+                onClick={() => navigate(`/profile/${loginUser?.userInfo?.userId}`)}
                 src={userImage}
                 alt="userProfile"
             />
