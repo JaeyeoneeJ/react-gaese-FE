@@ -15,20 +15,31 @@ export const PostsApi = {
   getGaese: () => instance.get("/post/list"),
   getDetailGaese: (postId) => instance.get(`/post/${postId}`),
   postGaese: (payload) =>
-    instance.post("/posts/write", payload.value, {
+    instance.post("/posts/write", payload.formData, {
       headers: {
         Authorization: payload.cookies.token,
+        "Content-Type": "multipart/form-data",
       },
     }),
-  deleteGaesel: (postId) => instance.delete(`/post/${postId}`),
+  deleteGaese: (payload) =>
+    instance.delete(`/posts/${payload.postId}`, {
+      headers: {
+        Authorization: payload.cookie,
+      },
+    }),
   patchGaese: (postId, edit) =>
     instance.patch(`/posts/${postId}`, { postComment: edit }),
 };
 export const CommentsApi = {
   getComments: (postId) => instance.get(`/comments/${postId}`),
   getDetailGaese: (postId) => instance.get(`/post/${postId}`),
-  postComments: (postId, payload) =>
-    instance.post(`/comments/${postId}`, payload),
+  postComments: (payload) =>
+    instance.post(`/comments/${payload.postId}`, payload.comment, {
+      headers: {
+        Authorization: payload.token,
+      },
+    }),
+
   deleteComments: (postId, cmtId) =>
     instance.delete(`/comments/${postId}/${cmtId}`),
   patchComments: (postId, cmtId, edit) =>

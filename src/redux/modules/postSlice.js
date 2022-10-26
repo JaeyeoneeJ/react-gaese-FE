@@ -1,16 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { PostsApi } from "../../mytools/instance";
+import { CommentsApi, PostsApi } from "../../mytools/instance";
 
 const initialState = {
-  post: [
-    {
-      id: 0,
-      postTitle: "오늘의 일상",
-      postContent: "오늘은 날씨가 좋은날~",
-      postPicture: "",
-    },
-  ],
+  post: [],
   isLoading: false,
   isSuccess: false,
   error: null,
@@ -33,10 +26,13 @@ export const __getPost = createAsyncThunk(
 export const __addPost = createAsyncThunk(
   "post/addPost",
   async (payload, thunkAPI) => {
-    console.log(payload.value);
+    console.log(payload);
+
     try {
       const { data } = await PostsApi.postGaese(payload);
-
+      for (const key of payload.value.postPicture.entries()) {
+        console.log(key);
+      }
       // const data = await axios.post(
       //   "http://localhost:3001/post/write",
       //   payload
@@ -49,14 +45,27 @@ export const __addPost = createAsyncThunk(
   }
 );
 
-export const __deleteTodo = createAsyncThunk(
-  "todos/deleteTodo",
+export const __deletePost = createAsyncThunk(
+  "posts/deletepost",
   async (payload, thunkAPI) => {
+    console.log(payload);
     try {
-      await axios.delete(
-        `https://shrouded-badlands-79466.herokuapp.com/todos/${payload}`
-      );
+      await PostsApi.deleteGaese(payload);
+
       return thunkAPI.fulfillWithValue(payload);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+export const __addComment = createAsyncThunk(
+  "comments/addcomment",
+  async (payload, thunkAPI) => {
+    console.log(payload);
+    try {
+      const data = await CommentsApi.postComments(payload);
+      console.log(data);
+      return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -67,10 +76,11 @@ export const postSlice = createSlice({
   name: "post",
   initialState,
   reducers: {
-    clearTodo: (state, action) => {
-      state.isSuccess = true;
+    clearPost: (state, action) => {
+      state.isSuccess = false;
     },
   },
+
   extraReducers: {
     [__getPost.pending]: (state) => {
       state.isLoading = true; // 네트워크 요청이 시작되면 로딩상태를 true로 변경합니다.
@@ -100,19 +110,22 @@ export const postSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
-    [__deleteTodo.pending]: (state) => {
+    [__deletePost.pending]: (state) => {
       state.isLoading = true;
     },
-    [__deleteTodo.fulfilled]: (state, action) => {
+    [__deletePost.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.todos = state.todos.filter((todo) => todo.id !== action.payload);
+      state.isSuccess = true;
+      state.post = state.post.filter(
+        (post) => post.postId !== action.payload.postId
+      );
     },
-    [__deleteTodo.rejected]: (state, action) => {
+    [__deletePost.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },
   },
 });
 
-export const {} = postSlice.actions;
+export const { clearPost } = postSlice.actions;
 export default postSlice.reducer;
