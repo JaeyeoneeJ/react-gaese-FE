@@ -4,6 +4,7 @@ import { useParams, useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import { FaRegHeart, FaRegCommentDots } from "react-icons/fa";
 import { __getPost } from "../../redux/modules/dbPostsSlice";
+import useTimeSet from "../../hooks/useTimeSet";
 
 const DetailPost = () => {
     const dispatch = useDispatch()
@@ -12,6 +13,7 @@ const DetailPost = () => {
 
     const { post } = useSelector((state) => state.posts)
 
+    // 현재 포스트의 id
     const { id } = useParams()
 
 
@@ -28,16 +30,18 @@ const DetailPost = () => {
                     <Box>
                         <UserPic
                             onClick={()=>navigate(`/profile/${post.userId}`)}
-                            src={post.userPic}
+                            // src={post.userPic}
+                            src="https://placeimg.com/100/100/person"
                             alt="userProfile"
                         />
                         <FontSize16>@{post.nickname}</FontSize16>
                     </Box>
                     <Box>
-                        <Time>{post.createdAt}</Time>
+                        <Time>{useTimeSet(post.createdAt)}</Time>
                     </Box>
                 </BoxHeader>
-                <PostPic src={post.postPicture} alt={post.id} />
+                {/* <PostPic src={post.postPicture} alt={post.id} /> */}
+                <PostPic src="https://placeimg.com/1000/1000/nature" alt="Post's Picture" />
                 <PostCtn>
                     <PostHeader>
                         <PostTitle>{post.title}</PostTitle>
@@ -46,7 +50,10 @@ const DetailPost = () => {
                                 color="tomato"
                                 strokeWidth={1}
                             />
-                            <FontSize16>{post.totalLike}</FontSize16>
+                            <FontSize16>
+                                {/* {post.totalLike} */}
+                                {"0"}
+                            </FontSize16>
                         </Box>
                     </PostHeader>
                     <PostContent>
@@ -101,7 +108,7 @@ const PostPic = styled.img`
     width: 100%;
     transition: all, 0.3s;
     &:hover {
-        opacity: 0.5;
+        opacity: 0.8;
         cursor: pointer;
     }
 `

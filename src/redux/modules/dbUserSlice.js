@@ -38,6 +38,7 @@ export const __userLogin = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const data = await instance.post("/users/login", payload);
+      console.log(data)
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);

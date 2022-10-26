@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-// import axios from "axios";
+import axios from "axios";
 import { instance } from "../instance";
 
 const initialState = {
@@ -14,7 +14,8 @@ export const __getPosts = createAsyncThunk(
   "posts/getPosts",
   async (payload, thunkAPI) => {
     try {
-      const data = await instance.get("/posts/list");
+      // const data = await instance.get("/posts/list");
+      const data = await axios.get("http://3.34.143.16/posts/list");
       return thunkAPI.fulfillWithValue(data.data.data);
 
     } catch (error) {
@@ -27,9 +28,11 @@ export const __getPost = createAsyncThunk(
   "posts/getPost",
   async (payload, thunkAPI) => {
     try {
-      console.log(payload)
       const data = await instance.get(`/posts/${payload.id}`);
-      return thunkAPI.fulfillWithValue(data.data);
+      console.log(payload)
+      console.log(data)
+      console.log(data.data)
+      return thunkAPI.fulfillWithValue(data.data.data);
 
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
