@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { FaRegHeart, FaRegCommentDots } from "react-icons/fa";
+import { FaRegHeart, FaHeart, FaRegCommentDots } from "react-icons/fa";
 import { __getPost } from "../../redux/modules/dbPostsSlice";
 import useTimeSet from "../../hooks/useTimeSet";
 import {
@@ -25,7 +25,7 @@ const DetailPost = () => {
   const { isSuccess } = useSelector((state) => state.post);
   const { loginUser } = useSelector((state) => state.dbUser);
   const { edit, setEdit } = useState(false);
-  const [postImg, setPostImg] = useState(post.postPicture)
+  const [postImg, setPostImg] = useState(post?.postPicture)
   console.log(postImg)
   // 현재 포스트의 id
   const { id } = useParams();
@@ -37,7 +37,7 @@ const DetailPost = () => {
   const postId = post.postId;
   const cookie = cookies.token;
   
-
+  const [isToggle, setIsToggle] = useState(false)
   const onClickPostDelete = () => {
     if (post?.postId === parseInt(id)) {
       window.confirm("포스트를 정말 삭제하겠습니까?") &&
@@ -72,7 +72,7 @@ const DetailPost = () => {
       return navigate("/");
     }
   }, [isSuccess]);
-
+  console.log(isToggle)
   // 삭제 후에도 다시 데이터를 불러오지 않게 하기 위해 useEffect를 분리함
   useEffect(()=> {
     dispatch(__getPost(id));
@@ -135,7 +135,12 @@ const DetailPost = () => {
                     </textarea>
                   </PostTitle>
                   <Box>
-                    <FaRegHeart color="tomato" strokeWidth={1} />
+                    <div onClick={()=>setIsToggle(!isToggle)}>
+                      {isToggle ?
+                        <FaHeart color="tomato" /> :
+                        <FaRegHeart color="tomato" strokeWidth={1} />
+                      }
+                    </div>
                     <FontSize16>
                       {/* {post.totalLike} */}
                       {"0"}
@@ -159,7 +164,12 @@ const DetailPost = () => {
                 <PostHeader>
                   <PostTitle>{post.title}</PostTitle>
                   <Box>
-                    <FaRegHeart color="tomato" strokeWidth={1} />
+                    <DivHover onClick={()=>setIsToggle(!isToggle)}>
+                      {isToggle ?
+                        <FaHeart color="tomato" /> :
+                        <FaRegHeart color="tomato" strokeWidth={1} />
+                      }
+                    </DivHover>
                     <FontSize16>
                       {/* {post.totalLike} */}
                       {"0"}
@@ -325,5 +335,10 @@ const DummyBox = styled.div`
     width: 500px;
   }
 `;
+const DivHover = styled.div`
+  &:hover {
+    cursor: pointer;
+  }
+`
 
 export default DetailPost;

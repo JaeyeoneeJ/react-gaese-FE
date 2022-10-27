@@ -67,16 +67,9 @@ const LogoCtn = styled.div`
 const PostListCtn = styled.div`
   margin: 30px auto 0 auto;
   display: flex;
-  justify-content: center;
-  gap: 3%;
-  align-items: center;
+  justify-content: space-between;
+  padding: 0 5%;
   flex-wrap: wrap;
-  @media screen and (max-width: 800px) {
-    gap: 5%;
-  }
-  @media screen and (max-width: 500px) {
-    gap: 0;
-  }
 `;
 
 export default PostListJJY;

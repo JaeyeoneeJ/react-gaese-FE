@@ -85,7 +85,7 @@ const MenuBar = styled.div`
     display: flex;
     width: 200px;
     flex-direction: column;
-    margin: 20px;
+    margin: 15px;
 `
 const MenuItem = styled.div`
     display: flex;
@@ -98,7 +98,7 @@ const MenuItem = styled.div`
         cursor: pointer;
         color: #AF93FF;
         padding: 30px;
-        border-bottom: 2px solid #AF93FF;
+        border-bottom: 5px solid #AF93FF;
     }
 `
 

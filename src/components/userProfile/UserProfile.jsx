@@ -8,6 +8,7 @@ import Loading from "../feature/Loading";
 import { useCookies } from "react-cookie";
 import { __getUser } from "../../redux/modules/dbUserSlice";
 import { __getPosts } from "../../redux/modules/dbPostsSlice";
+import Post from "../post/Post";
 
 const UserProfile = () => {
     const navigate = useNavigate();
@@ -15,16 +16,17 @@ const UserProfile = () => {
     const { id } = useParams
     // console.log(id)
     const [cookies, setCookie] = useCookies(['token'])
-    console.log(cookies.token)
-    console.log(cookies.userId)
+    // console.log(cookies.token)
+    // console.log(cookies.userId)
     const token = cookies.token
     const userId = cookies.userId
-    
+
     const { loginUser } = useSelector((state) => state.dbUser)
     const { isLoading, posts, error } = useSelector((state) => state.posts)
 
     // console.log(posts)
-    const [userPic, setUserPic] = useState(loginUser.userInfo.userPicture)
+    console.log(loginUser?.posts)
+    const [userPic, setUserPic] = useState(loginUser?.userInfo?.userPicture)
 
     useEffect(() => {
         if (userPic === null || userPic === undefined) {
@@ -55,22 +57,34 @@ const UserProfile = () => {
                 </ProfileCtn>
                 <UserProfileState>
                     <Username>
-                        @{loginUser.userInfo.userId}'s state
+                        @{loginUser?.userInfo?.userId}'s state
                     </Username>
                     <StateBox>
                         <StateArea>
                             <KeyArea>Nickname</KeyArea>
-                            <ValueArea>{loginUser.userInfo.nickname}</ValueArea>
+                            <ValueArea>{loginUser?.userInfo?.nickname}</ValueArea>
                         </StateArea>
                         <StateArea>
                             <KeyArea>State Msg</KeyArea>
-                            {(loginUser.userInfo.stateText===null || loginUser.userInfo.stateText===undefined || loginUser.userInfo.stateText.trim()==="") ? (
-                                <NoneMsg>상태 메세지가 없습니다.</NoneMsg>
-                            ) : <ValueArea>{loginUser.userInfo.stateText}</ValueArea> }
+                            {(loginUser?.userInfo?.stateText === null || loginUser?.userInfo?.stateText === undefined || loginUser?.userInfo?.stateText.trim() === "") ? (
+                                <NoneMsg>상태 메세지가 없습니다.<br />'EDIT' 버튼을 눌러 상태 메시지를 입력해주세요.</NoneMsg>
+                            ) : <ValueArea>{loginUser?.userInfo?.stateText}</ValueArea>}
+                        </StateArea>
+                        <StateArea>
+                            <KeyArea>Post</KeyArea>
+                            <ValueArea>{loginUser?.posts?.length}</ValueArea>
                         </StateArea>
                     </StateBox>
                 </UserProfileState>
             </Ctn>
+            <PostName>
+                #log
+            </PostName>
+            <PostCtn>
+                {loginUser?.posts?.map((post) => {
+                    return <Post key={post.postId} post={post} />;
+                })}
+            </PostCtn>
         </Padding>
     );
 };
@@ -131,39 +145,69 @@ const UserProfileState = styled.div`
     justify-content: left;
     gap: 20px;
     width: 100%;
-    max-width: 500px;
+    max-width: 400px;
     margin: 20px;
-    border: 1px solid red;
+    /* border: 1px solid red; */
 `
 const Username = styled.p`
-    font-size: 16px;
+    font-size: 20px;
+    color: #AF93FF;
+    font-weight: 300;
+    display: flex;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #CCECDD;
     @media screen and (max-width: 800px) {
-        align-items: center;
+        justify-content: center;
     }
 `
 const StateBox = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: left;
-    gap: 10px;
+    gap: 20px;
+    font-size: 1.1em;
+    @media screen and (max-width: 800px) {
+        justify-content: center;
+    }
 `
 const StateArea = styled.div`
     display: flex;
     width: 100%;
     gap: 10px;
     /* justify-content: space-around; */
-    border: 1px solid red;
+    /* border: 1px solid red; */
 `
 const KeyArea = styled.p`
-    border: 1px solid red;
+    /* border: 1px solid red; */
+    font-weight: 700;
     width: 100px;
 `
 const ValueArea = styled.p`
-    border: 1px solid red;
+    /* border: 1px solid red; */
+    width: 100%;
 `
 const NoneMsg = styled.p`
-    border: 1px solid red;
-    color: "tomato";
+    /* border: 1px solid red; */
+    color: tomato;
+    width: 100%;
+`
+const PostName = styled.div`
+    margin: 50px auto 0 auto;
+    font-size: 20px;
+    color: #AF93FF;
+    font-weight: 300;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #CCECDD;
+`
+const PostCtn = styled.div`
+    margin: 30px auto 0 auto;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 5%;
+  flex-wrap: wrap;
 `
 
 export default UserProfile;
