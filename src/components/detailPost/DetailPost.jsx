@@ -25,7 +25,7 @@ const DetailPost = () => {
   const { isSuccess } = useSelector((state) => state.post);
   const { loginUser } = useSelector((state) => state.dbUser);
   const { edit, setEdit } = useState(false);
-  const [postImg, setPostImg] = useState(post?.postPicture)
+  const [postImg, setPostImg] = useState(post.postPicture)
   console.log(postImg)
   // 현재 포스트의 id
   const { id } = useParams();
