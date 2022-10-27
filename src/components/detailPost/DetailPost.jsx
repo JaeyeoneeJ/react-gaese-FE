@@ -94,6 +94,7 @@ const DetailPost = () => {
               <PostHeader>
                 <PostTitle>
                   <textarea
+                    style={{ width: 500 }}
                     name="memo"
                     maxLength={200}
                     onChange={onChangeHandler}
