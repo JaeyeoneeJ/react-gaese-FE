@@ -54,7 +54,7 @@ export const __getUser = createAsyncThunk(
   "dbUser/getUser",
   async (payload, thunkAPI) => {
     try {
-      console.log(payload)
+      // console.log(payload)
       const data = await instance.get(`/users/${payload.userId}`, {
         headers: {
           Authorization: payload.token,
@@ -105,11 +105,9 @@ export const dbUserSlice = createSlice({
 
       // 로그인이 되었다는 상태 값, true로 변경
       state.isSuccess = true;
-
-      // 성공 시, 메세지 경로에요.
-      // response가 정상적으로 통신된 경우 발생하는 메세지 값
-      state.msg = action.payload.data;
-      alert(state.msg);
+      console.log(action.payload.data.nickname)
+      
+      alert(`"${action.payload.data.nickname}"님 반갑습니다. 메인페이지로 이동합니다.`);
     },
     [__userLogin.rejected]: (state, action) => {
       state.isLoading = false;

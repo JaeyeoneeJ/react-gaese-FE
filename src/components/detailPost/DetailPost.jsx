@@ -13,6 +13,7 @@ import {
 import { useCookies } from "react-cookie";
 import usePost from "../../hooks/usePost";
 import Button from "../elements/Button"
+import CommentsList from "../commentsListJJY/CommentsList";
 
 const DetailPost = () => {
   const dispatch = useDispatch();
@@ -25,8 +26,8 @@ const DetailPost = () => {
   const { isSuccess } = useSelector((state) => state.post);
   const { loginUser } = useSelector((state) => state.dbUser);
   const { edit, setEdit } = useState(false);
-  const [postImg, setPostImg] = useState(post.postPicture)
-  console.log(postImg)
+  // const [postImg, setPostImg] = useState(post?.postPicture)
+  // console.log(postImg)
   // 현재 포스트의 id
   const { id } = useParams();
   // console.log(id);
@@ -60,11 +61,12 @@ const DetailPost = () => {
     );
   };
 
-  useEffect(()=> {
-      if (postImg === null || postImg === undefined) {
-        setPostImg("https://placeimg.com/1000/1000/nature")
-    }
-    },[])
+  // useEffect(()=> {
+  //     if (postImg === null || postImg === undefined) {
+  //       setPostImg("https://placeimg.com/1000/1000/nature")
+  //   }
+  //   },[])
+  
   useEffect(() => {
     if (isSuccess === true) {
       alert("포스트가 삭제 되었습니다.");
@@ -72,7 +74,8 @@ const DetailPost = () => {
       return navigate("/");
     }
   }, [isSuccess]);
-  console.log(isToggle)
+  // console.log(isToggle)
+  
   // 삭제 후에도 다시 데이터를 불러오지 않게 하기 위해 useEffect를 분리함
   useEffect(()=> {
     dispatch(__getPost(id));
@@ -120,7 +123,7 @@ const DetailPost = () => {
             </Box>
           </BoxHeader>
           {/* <PostPic src={post.postPicture} alt={post.id} /> */}
-          <PostPic src={postImg} alt="Post's Picture" />
+          <PostPic src={post?.postPicture} alt="Post's Picture" />
           {edit ? (
             <>
               <PostCtn>
@@ -182,21 +185,12 @@ const DetailPost = () => {
           )}
         </PostBox>
       </Ctn>
-      <CommentCtn onClick={() => setIsOn(true)}>
-        <CommentName>
+      <CommentCtn>
+        <CommentName  onClick={() => setIsOn(!isOn)}>
           <FaRegCommentDots size={24} /> 댓글 보기
         </CommentName>
         {isOn && (
-          <CommentBox>
-            <DummyBox>
-              <input
-                onChange={(e) => setComment(e.target.value)}
-                value={comment}
-                type="text"
-              />
-              <button onClick={onClickCommentAdd}>게시</button>
-            </DummyBox>
-          </CommentBox>
+          <CommentsList postId={postId} cookie={cookie} isOn={isOn} setIsOn={setIsOn}/>
         )}
       </CommentCtn>
     </Padding>
@@ -304,7 +298,7 @@ const CommentCtn = styled.div`
   box-sizing: border-box;
   width: 70%;
   padding: 10px 20px;
-  position: relative;
+  /* position: relative; */
   box-shadow: 0px 3px 7px 3px rgba(0, 0, 0, 0.2);
   &:hover {
     cursor: pointer;
@@ -317,23 +311,12 @@ const CommentCtn = styled.div`
     width: 100%;
   }
 `;
-const CommentBox = styled.div`
-  border-top: 2px solid #d9d9d9;
-  width: 100%;
-`;
+
 const CommentName = styled.div`
   width: 100%;
   display: flex;
   gap: 10px;
   align-items: center;
-`;
-const DummyBox = styled.div`
-  padding: 10px 0;
-  display: flex;
-  justify-content: space-between;
-  input {
-    width: 500px;
-  }
 `;
 const DivHover = styled.div`
   &:hover {

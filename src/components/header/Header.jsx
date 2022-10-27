@@ -12,9 +12,9 @@ const Header = () => {
     const dispatch = useDispatch()
     const [isLogin, setIsLogin] = useState(false)
     const [cookies, setCookie] = useCookies(['userId'])
-    console.log(cookies?.userId)
+    // console.log(cookies?.userId)
 
-    console.log(isLogin)
+    // console.log(isLogin)
     
     useEffect(()=> {
         if (cookies?.userId === undefined || cookies?.userId === null || cookies?.userId.trim() === "") {

@@ -12,7 +12,7 @@ const PostListJJY = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { posts, isLoading, error } = useSelector((state) => state.posts);
-  console.log(posts);
+  // console.log(posts);
 
   useEffect(() => {
     dispatch(__getPosts());
@@ -66,13 +66,12 @@ const LogoCtn = styled.div`
 `
 const PostListCtn = styled.div`
   margin: 30px auto 0 auto;
-  display: flex;
-  justify-content: flex-start;
-  padding: 0;
+  display: grid;
+  grid-gap: 30px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, max-content));
+  justify-content: center;
+  padding: initial;
   flex-wrap: wrap;
-  @media screen and (max-width: 800px) {
-    justify-content: space-between;
-  }
 `;
 
 export default PostListJJY;

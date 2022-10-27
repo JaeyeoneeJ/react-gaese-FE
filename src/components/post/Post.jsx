@@ -47,14 +47,11 @@ const PostBox = styled.div`
   border: 1px solid #d9d9d9;
   border-radius: 20px;
   box-sizing: border-box;
-  margin: 0 10px;
-  width: 31%;
-  margin-bottom: 30px;
+  width: 100%;
+  /* width: 31%; */
+  /* margin-bottom: 30px; */
   position: relative;
   box-shadow: 0px 3px 7px 3px rgba(0, 0, 0, 0.2);
-  @media screen and (max-width: 800px) {
-    width: 45%;
-  }
   @media screen and (max-width: 500px) {
     min-width: 200px;
     width: 100%;
