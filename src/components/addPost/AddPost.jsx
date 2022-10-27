@@ -5,13 +5,14 @@ import styled from "styled-components";
 import usePost from "../../hooks/usePost";
 import Button from "../elements/Button";
 import { FaImage } from "react-icons/fa";
-import { __addPost, __getPost } from "../../redux/modules/postSlice";
+import { clearPost, __addPost, __getPost } from "../../redux/modules/postSlice";
 import { useDropzone } from "react-dropzone";
 import { useCookies } from "react-cookie";
 const AddPost = () => {
   const [cookies] = useCookies(["token"]);
   console.log(cookies);
   const post = useSelector((state) => state.post);
+  const {isSuccess} = useSelector((state) => state.post);
   const navigate = useNavigate();
   const [value, onChangeHandler, resetValue] = usePost();
   const dispatch = useDispatch();
@@ -68,16 +69,22 @@ const AddPost = () => {
 
     dispatch(__addPost({ cookies, formData }));
 
-    if (
-      window.confirm(
-        `Post가 정상적으로 업로드 되었습니다.\n리스트에서 확인 하시겠습니까?`
-      )
-    ) {
-      navigate(`/`);
-    } else {
-      resetValue();
-    }
+    
   };
+  useEffect(()=> {
+    if(isSuccess===true) {
+      if (
+        window.confirm(
+          `Post가 정상적으로 업로드 되었습니다.\n리스트에서 확인 하시겠습니까?`
+        )
+      ) {
+        dispatch(clearPost())
+        return navigate(`/`);
+      } else {
+        resetValue();
+      }
+    }
+  })
 
   const thumb = postPicture?.map((file) => {
     return (
@@ -110,7 +117,7 @@ const AddPost = () => {
             <FaImage size={80} color="#d9d9d9" />
           )}
 
-          <Button width="120px" bgColor="#78A6FF" border="none" color="white">
+          <Button width="120px" bgColor="#AF93FF" border="none" color="white">
             사진 선택하기
           </Button>
         </AddPostPicBox>
@@ -231,8 +238,8 @@ const AddTodoTextarea = styled.textarea`
 
 const AddTodoBtn = styled.button`
   background-color: transparent;
-  border: 2px solid #1a73e8;
-  color: #1a73e8;
+  border: 2px solid #AF93FF;
+  color: #AF93FF;
   font-weight: 700;
   border-radius: 10px;
   padding: 10px;
@@ -240,7 +247,7 @@ const AddTodoBtn = styled.button`
   transition: all, 0.3s;
   &:hover {
     cursor: pointer;
-    background-color: #1a73e8;
+    background-color: #AF93FF;
     color: white;
   }
 `;

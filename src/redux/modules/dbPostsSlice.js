@@ -28,7 +28,7 @@ export const __getPost = createAsyncThunk(
   "posts/getPost",
   async (payload, thunkAPI) => {
     try {
-      const data = await instance.get(`/posts/${payload.id}`);
+      const data = await instance.get(`/posts/${payload}`);
       console.log(payload)
       console.log(data)
       console.log(data.data)

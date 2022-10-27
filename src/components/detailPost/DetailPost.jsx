@@ -12,6 +12,8 @@ import {
 } from "../../redux/modules/postSlice";
 import { useCookies } from "react-cookie";
 import usePost from "../../hooks/usePost";
+import Button from "../elements/Button"
+
 const DetailPost = () => {
   const dispatch = useDispatch();
   const [cookies] = useCookies(["token"]);
@@ -23,23 +25,18 @@ const DetailPost = () => {
   const { isSuccess } = useSelector((state) => state.post);
   const { loginUser } = useSelector((state) => state.dbUser);
   const { edit, setEdit } = useState(false);
+  const [postImg, setPostImg] = useState(post.postPicture)
+  console.log(postImg)
   // 현재 포스트의 id
   const { id } = useParams();
-  console.log(id);
-  console.log(post);
-  console.log(loginUser);
-  console.log(loginUser?.userInfo?.id);
-  console.log(post?.id);
+  // console.log(id);
+  // console.log(post);
+  // console.log(loginUser);
+  // console.log(loginUser?.userInfo?.id);
+  // console.log(post?.id);
   const postId = post.postId;
   const cookie = cookies.token;
-  useEffect(() => {
-    if (isSuccess === true) {
-      alert("포스트가 삭제 되었습니다.");
-      dispatch(clearPost());
-      return navigate("/");
-    }
-    dispatch(__getPost({ id }));
-  }, [isSuccess]);
+  
 
   const onClickPostDelete = () => {
     if (post?.postId === parseInt(id)) {
@@ -63,81 +60,118 @@ const DetailPost = () => {
     );
   };
 
+  useEffect(()=> {
+      if (postImg === null || postImg === undefined) {
+        setPostImg("https://placeimg.com/1000/1000/nature")
+    }
+    },[])
+  useEffect(() => {
+    if (isSuccess === true) {
+      alert("포스트가 삭제 되었습니다.");
+      dispatch(clearPost());
+      return navigate("/");
+    }
+  }, [isSuccess]);
+
+  // 삭제 후에도 다시 데이터를 불러오지 않게 하기 위해 useEffect를 분리함
+  useEffect(()=> {
+    dispatch(__getPost(id));
+  },[])
+
   return (
     <Padding>
-      <PostBox>
-        <BoxHeader>
-          <Box>
-            <UserPic
-              onClick={() => navigate(`/profile/${post.userId}`)}
-              // src={post.userPic}
-              src="https://placeimg.com/100/100/person"
-              alt="userProfile"
-            />
-            <FontSize16>@{post.nickname}</FontSize16>
-            <Time>{useTimeSet(post.createdAt)}</Time>
-          </Box>
-          <Box>
-            {loginUser.userInfo.id === post.id ? (
-              <div>
-                <button onClick={() => onClickPostDelete(id)}>삭제</button>
-                <button onClick={() => setEdit(true)}>수정</button>
-              </div>
-            ) : null}
-          </Box>
-        </BoxHeader>
-        {/* <PostPic src={post.postPicture} alt={post.id} /> */}
-        <PostPic src={post.postPicture} alt="Post's Picture" />
-        {edit ? (
-          <>
-            <PostCtn>
-              <PostHeader>
-                <PostTitle>
+      <Ctn>
+        <PostBox>
+          <BoxHeader>
+            <Box>
+              <UserPic
+                onClick={() => navigate(`/profile/${post.userId}`)}
+                // src={post.userPic}
+                src="https://placeimg.com/100/100/person"
+                alt="userProfile"
+              />
+              <FontSize16>@{post.nickname}</FontSize16>
+              <Time>{useTimeSet(post.createdAt)}</Time>
+            </Box>
+            <Box>
+              {loginUser?.userInfo?.id === post?.id ? (
+                <Box>
+                  <Button
+                    onClick={() => onClickPostDelete(id)}
+                    color="tomato"
+                    border="none"
+                    width="auto"
+                    padding="0"
+                  >
+                    삭제
+                  </Button>
+                  |
+                  <Button
+                    onClick={() => setEdit(true)}
+                    color="#AF93FF"
+                    border="none"
+                    width="auto"
+                    padding="0"
+                  >
+                    수정
+                  </Button>
+                </Box>
+              ) : null}
+            </Box>
+          </BoxHeader>
+          {/* <PostPic src={post.postPicture} alt={post.id} /> */}
+          <PostPic src={postImg} alt="Post's Picture" />
+          {edit ? (
+            <>
+              <PostCtn>
+                <PostHeader>
+                  <PostTitle>
+                    <textarea
+                      name="memo"
+                      maxLength={200}
+                      onChange={onChangeHandler}
+                    >
+                      <h2>{post.title}</h2>
+                    </textarea>
+                  </PostTitle>
+                  <Box>
+                    <FaRegHeart color="tomato" strokeWidth={1} />
+                    <FontSize16>
+                      {/* {post.totalLike} */}
+                      {"0"}
+                    </FontSize16>
+                  </Box>
+                </PostHeader>
+                <PostContent>
                   <textarea
                     name="memo"
                     maxLength={200}
                     onChange={onChangeHandler}
                   >
-                    <h2>{post.title}</h2>
+                    <h2>{post.content}</h2>
                   </textarea>
-                </PostTitle>
-                <Box>
-                  <FaRegHeart color="tomato" strokeWidth={1} />
-                  <FontSize16>
-                    {/* {post.totalLike} */}
-                    {"0"}
-                  </FontSize16>
-                </Box>
-              </PostHeader>
-              <PostContent>
-                <textarea
-                  name="memo"
-                  maxLength={200}
-                  onChange={onChangeHandler}
-                >
-                  <h2>{post.content}</h2>
-                </textarea>
-              </PostContent>
-            </PostCtn>
-          </>
-        ) : (
-          <>
-            <PostCtn>
-              <PostHeader>
-                <PostTitle>{post.title}</PostTitle>
-                <Box>
-                  <FaRegHeart color="tomato" strokeWidth={1} />
-                  <FontSize16>
-                    {/* {post.totalLike} */}
-                    {"0"}
-                  </FontSize16>
-                </Box>
-              </PostHeader>
-              <PostContent>{post.content}</PostContent>
-            </PostCtn>
-          </>
-        )}
-      </PostBox>
+                </PostContent>
+              </PostCtn>
+            </>
+          ) : (
+            <>
+              <PostCtn>
+                <PostHeader>
+                  <PostTitle>{post.title}</PostTitle>
+                  <Box>
+                    <FaRegHeart color="tomato" strokeWidth={1} />
+                    <FontSize16>
+                      {/* {post.totalLike} */}
+                      {"0"}
+                    </FontSize16>
+                  </Box>
+                </PostHeader>
+                <PostContent>{post.content}</PostContent>
+              </PostCtn>
+            </>
+          )}
+        </PostBox>
+      </Ctn>
       <CommentCtn onClick={() => setIsOn(true)}>
         <CommentName>
           <FaRegCommentDots size={24} /> 댓글 보기
@@ -161,7 +195,7 @@ const DetailPost = () => {
 
 const Padding = styled.div`
   padding: 20px;
-  margin: 30px auto 30px auto;
+  margin: 0px auto 30px auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -169,6 +203,7 @@ const Padding = styled.div`
 `;
 const Ctn = styled.div`
     margin-top: 80px;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -222,6 +257,10 @@ const Box = styled.div`
   display: flex;
   gap: 10px;
   align-items: center;
+  color: #d9d9d9;
+  & > svg:hover {
+    cursor: pointer;
+  }
 `;
 
 const Time = styled.p`
@@ -241,6 +280,7 @@ const UserPic = styled.img`
   }
 `;
 const FontSize16 = styled.p`
+  color: black;
   font-size: 16px;
 `;
 

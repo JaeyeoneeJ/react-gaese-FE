@@ -19,7 +19,7 @@ const HamburgerMenu = ({isClick, setIsClick, userId}) => {
             return;
         }
     }
-    console.log(isClick, onMove)
+    // console.log(isClick, onMove)
     useEffect(()=> {
         if (isClick) {
             setOnMove("0")
@@ -85,7 +85,7 @@ const MenuBar = styled.div`
     display: flex;
     width: 200px;
     flex-direction: column;
-    margin: 10px;
+    margin: 20px;
 `
 const MenuItem = styled.div`
     display: flex;
@@ -93,6 +93,13 @@ const MenuItem = styled.div`
     padding: 20px;
     border-bottom: 1px solid #d9d9d9;
     color: gray;
+    transition: all, 0.3s;
+    &:hover{
+        cursor: pointer;
+        color: #AF93FF;
+        padding: 30px;
+        border-bottom: 2px solid #AF93FF;
+    }
 `
 
 export default HamburgerMenu

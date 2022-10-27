@@ -15,10 +15,7 @@ const UserStateHeader = ({cookies}) => {
     
     const [userImage, setUserImage] = useState("")
     const [isClick, setIsClick] = useState(false)
-    console.log(loginUser?.userInfo)
-    
-    
-    
+    // console.log(loginUser?.userInfo)
 
     // user정보의 이미지가 null 값이면 더미 이미지 씌우기
     useEffect(()=> {
@@ -56,6 +53,9 @@ const UserStateHeader = ({cookies}) => {
 }
 // header right 시작
 const Ctn = styled.div`
+    & svg:hover {
+        cursor: pointer;
+    }
 `
 const CtnBox = styled.div`
     display: flex;
@@ -76,6 +76,8 @@ const UserInfo = styled.div`
 `
 const Strong = styled.strong`
     color: #AF93FF;
+    /* color: #a2b01d; */
+    /* color: #FFA830; */
 `
 const Username = styled.p`
     font-size: 10px;

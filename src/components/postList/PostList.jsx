@@ -6,16 +6,25 @@ import LogoItem from "../elements/LogoItem";
 import { useNavigate } from "react-router-dom";
 import { __getPosts } from "../../redux/modules/dbPostsSlice";
 import Post from "../post/Post";
+import Loading from "../feature/Loading";
 
 const PostListJJY = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { posts } = useSelector((state) => state.posts);
+  const { posts, isLoading, error } = useSelector((state) => state.posts);
   console.log(posts);
 
   useEffect(() => {
     dispatch(__getPosts());
   }, []);
+
+  if (isLoading) {
+    return <Loading />
+  }
+
+  if (error) {
+    return <div>{error.message}</div>
+  }
 
   return (
     <Padding>

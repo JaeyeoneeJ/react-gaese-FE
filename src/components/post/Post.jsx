@@ -10,9 +10,13 @@ const Post = ({post}) => {
     const navigate = useNavigate()    
     
     const [postImg, setPostImg] = useState(post.postPicture)
-    if (post.postPicture === null || post.postPicture === undefined) {
+
+    useEffect(()=> {
+      if (postImg === null || postImg === undefined) {
         setPostImg("https://placeimg.com/1000/1000/nature")
-    }
+      }
+    },[])
+    
     return (
         <PostBox>
             <ImgBox onClick={()=>navigate(`/post/${post.postId}`)}>

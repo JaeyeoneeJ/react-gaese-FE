@@ -30,9 +30,9 @@ export const __addPost = createAsyncThunk(
 
     try {
       const { data } = await PostsApi.postGaese(payload);
-      for (const key of payload.value.postPicture.entries()) {
-        console.log(key);
-      }
+      // for (const key of payload?.value?.postPicture?.entries()) {
+      //   console.log(key);
+      // }
       // const data = await axios.post(
       //   "http://localhost:3001/post/write",
       //   payload
@@ -116,8 +116,9 @@ export const postSlice = createSlice({
     [__deletePost.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.isSuccess = true;
+      console.log(action.payload.postId)
       state.post = state.post.filter(
-        (post) => post.postId !== action.payload.postId
+        (post) => +post.postId !== +action.payload.postId
       );
     },
     [__deletePost.rejected]: (state, action) => {

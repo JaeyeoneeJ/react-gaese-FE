@@ -13,14 +13,14 @@ const Header = () => {
     const [isLogin, setIsLogin] = useState(false)
     const [cookies, setCookie] = useCookies(['userId'])
     console.log(cookies?.userId)
+
     console.log(isLogin)
     
     useEffect(()=> {
-        if (cookies?.userId !== undefined) {
-            setIsLogin(true)
-            
-        } else {
+        if (cookies?.userId === undefined || cookies?.userId === null || cookies?.userId.trim() === "") {
             setIsLogin(false)
+        } else {
+            setIsLogin(true)
         }
     },[])
     return (
