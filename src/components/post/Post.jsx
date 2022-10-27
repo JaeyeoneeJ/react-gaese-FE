@@ -48,7 +48,7 @@ const PostBox = styled.div`
   border-radius: 20px;
   box-sizing: border-box;
   margin: 0 10px;
-  width: 30%;
+  width: 31%;
   margin-bottom: 30px;
   position: relative;
   box-shadow: 0px 3px 7px 3px rgba(0, 0, 0, 0.2);

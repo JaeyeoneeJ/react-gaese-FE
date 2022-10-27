@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import useInput from "../../hooks/useInput";
-import { __signupUser } from "../../redux/modules/dbUserSlice";
+import { __signupUser, clearCheckLogin } from "../../redux/modules/dbUserSlice";
 import Button from "../elements/Button";
 
 const SignUpPage = () => {
@@ -55,7 +55,9 @@ const SignUpPage = () => {
     useEffect(()=> {
         if (isSuccess) {
             alert('회원가입이 완료되었습니다. 로그인 페이지로 이동합니다.')
+            dispatch(clearCheckLogin())
             return navigate('/login')
+
         }
     })
 

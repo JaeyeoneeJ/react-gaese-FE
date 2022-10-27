@@ -67,9 +67,12 @@ const LogoCtn = styled.div`
 const PostListCtn = styled.div`
   margin: 30px auto 0 auto;
   display: flex;
-  justify-content: space-between;
-  padding: 0 5%;
+  justify-content: flex-start;
+  padding: 0;
   flex-wrap: wrap;
+  @media screen and (max-width: 800px) {
+    justify-content: space-between;
+  }
 `;
 
 export default PostListJJY;

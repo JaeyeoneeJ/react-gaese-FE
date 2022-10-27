@@ -66,9 +66,9 @@ const UserProfile = () => {
                         </StateArea>
                         <StateArea>
                             <KeyArea>State Msg</KeyArea>
-                            {(loginUser?.userInfo?.stateText === null || loginUser?.userInfo?.stateText === undefined || loginUser?.userInfo?.stateText.trim() === "") ? (
+                            {(loginUser?.userInfo?.statusText === null || loginUser?.userInfo?.statusText === undefined || loginUser?.userInfo?.statusText.trim() === "") ? (
                                 <NoneMsg>상태 메세지가 없습니다.<br />'EDIT' 버튼을 눌러 상태 메시지를 입력해주세요.</NoneMsg>
-                            ) : <ValueArea>{loginUser?.userInfo?.stateText}</ValueArea>}
+                            ) : <ValueArea>{loginUser?.userInfo?.statusText}</ValueArea>}
                         </StateArea>
                         <StateArea>
                             <KeyArea>Post</KeyArea>
