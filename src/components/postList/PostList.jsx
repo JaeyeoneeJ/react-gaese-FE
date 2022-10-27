@@ -12,7 +12,7 @@ const PostListJJY = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { posts, isLoading, error } = useSelector((state) => state.posts);
-  // console.log(posts);
+  console.log(posts);
 
   useEffect(() => {
     dispatch(__getPosts());

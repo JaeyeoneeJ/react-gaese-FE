@@ -26,8 +26,8 @@ const DetailPost = () => {
   const { isSuccess } = useSelector((state) => state.post);
   const { loginUser } = useSelector((state) => state.dbUser);
   const { edit, setEdit } = useState(false);
-  // const [postImg, setPostImg] = useState(post?.postPicture)
-  // console.log(postImg)
+  const [postImg, setPostImg] = useState(post.postPicture)
+  console.log(postImg)
   // 현재 포스트의 id
   const { id } = useParams();
   // console.log(id);
@@ -37,6 +37,7 @@ const DetailPost = () => {
   // console.log(post?.id);
   const postId = post.postId;
   const cookie = cookies.token;
+  
   
   const [isToggle, setIsToggle] = useState(false)
   const onClickPostDelete = () => {
@@ -61,11 +62,11 @@ const DetailPost = () => {
     );
   };
 
-  // useEffect(()=> {
-  //     if (postImg === null || postImg === undefined) {
-  //       setPostImg("https://placeimg.com/1000/1000/nature")
-  //   }
-  //   },[])
+  useEffect(()=> {
+      if (postImg === null || postImg === undefined) {
+        setPostImg("https://placeimg.com/1000/1000/nature")
+    }
+    },[dispatch])
   
   useEffect(() => {
     if (isSuccess === true) {
@@ -123,7 +124,7 @@ const DetailPost = () => {
             </Box>
           </BoxHeader>
           {/* <PostPic src={post.postPicture} alt={post.id} /> */}
-          <PostPic src={post?.postPicture} alt="Post's Picture" />
+          <PostPic src={post.postPicture} alt="Post's Picture" />
           {edit ? (
             <>
               <PostCtn>
@@ -190,7 +191,7 @@ const DetailPost = () => {
           <FaRegCommentDots size={24} /> 댓글 보기
         </CommentName>
         {isOn && (
-          <CommentsList postId={postId} cookie={cookie} isOn={isOn} setIsOn={setIsOn}/>
+          <CommentsList postId={postId} cookie={cookie}/>
         )}
       </CommentCtn>
     </Padding>

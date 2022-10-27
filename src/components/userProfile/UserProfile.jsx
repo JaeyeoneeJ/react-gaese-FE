@@ -26,7 +26,7 @@ const UserProfile = () => {
 
     // console.log(posts)
     console.log(loginUser?.posts)
-    const [userPic, setUserPic] = useState(loginUser?.userInfo?.userPicture)
+    const [userPic, setUserPic] = useState(loginUser.userInfo.userPicture)
 
     useEffect(() => {
         if (userPic === null || userPic === undefined) {
@@ -204,10 +204,12 @@ const PostName = styled.div`
 `
 const PostCtn = styled.div`
     margin: 30px auto 0 auto;
-  display: flex;
-  justify-content: space-between;
-  padding: 0 5%;
-  flex-wrap: wrap;
+    display: grid;
+    grid-gap: 30px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, max-content));
+    justify-content: center;
+    padding: initial;
+    flex-wrap: wrap;
 `
 
 export default UserProfile;

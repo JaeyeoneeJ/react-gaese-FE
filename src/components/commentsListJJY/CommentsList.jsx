@@ -66,7 +66,6 @@ const CommentsList = ({postId, cookie, setIsOn, isOn}) => {
 }
 const CommentsListCtn = styled.div`
     width: 100%;
-    border: 1px solid red;
 `
 const Footer = styled.div`
     border-top: 1px solid #ddd;

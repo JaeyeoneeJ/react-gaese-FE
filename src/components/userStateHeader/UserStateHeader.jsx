@@ -20,7 +20,7 @@ const UserStateHeader = ({cookies}) => {
     // user정보의 이미지가 null 값이면 더미 이미지 씌우기
     useEffect(()=> {
         dispatch(__getUser(cookies))
-        if (loginUser?.userInfo?.image === null || loginUser?.userInfo?.image === undefined) {
+        if (loginUser?.userInfo?.userPicture === null || loginUser?.userInfo?.userPicture === undefined) {
             setUserImage("https://placeimg.com/100/100/person")
         } else {
             setUserImage(loginUser?.userInfo?.image)
@@ -35,7 +35,7 @@ const UserStateHeader = ({cookies}) => {
                 </UserInfo>
                 <UserPic
                     onClick={() => navigate(`/profile/${loginUser?.userInfo?.userId}`)}
-                    src={userImage}
+                    src={loginUser?.userInfo?.userPicture}
                     alt="userProfile"
                 />
                 <div onClick={()=>setIsClick(!isClick)}>
@@ -85,6 +85,8 @@ const Username = styled.p`
 `
 const UserPic = styled.img`
     width: 40px;
+    height: 40px;
+    object-fit: cover;
     border-radius: 30px;
     border: 2px solid white;
     &:hover {
