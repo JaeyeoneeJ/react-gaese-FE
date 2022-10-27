@@ -1,1 +1,0 @@
-{"version":3,"file":"static/css/main.fb4cdc2e.css","mappings":"AAAA,gBAEI,cAAe,CADf,kBAEJ","sources":["components/header/header.css"],"sourcesContent":[".navigate:hover {\n    transition: all, 0.3s;\n    cursor: pointer;\n}"],"names":[],"sourceRoot":""}

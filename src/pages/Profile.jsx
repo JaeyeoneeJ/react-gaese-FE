@@ -1,17 +1,16 @@
 import React from "react";
 import Header from "../components/header/Header";
 import Layout from "../components/layout/Layout";
-import SignUpPage from "../components/signUp/SignUpPage";
+import UserProfile from "../components/userProfile/UserProfile";
 
-const Home = () => {
-
+const Profile = () => {
   return (
     <>
       <Header />
       <Layout>
-        <SignUpPage />
+        <UserProfile />
       </Layout>
     </>
   );
 };
-export default Home;
+export default Profile;

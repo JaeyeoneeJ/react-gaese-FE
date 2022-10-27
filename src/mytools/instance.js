@@ -1,7 +1,12 @@
 import axios from "axios";
 
 export const instance = axios.create({
-  baseURL: process.env.REACT_APP_URL,
+
+  // baseURL: process.env.REACT_APP_URL,
+  // baseURL: "http://3.34.143.16/",
+  // baseURL: "http://localhost:4000",
+  baseURL: "http://52.78.244.135",
+
 });
 
 export const UserApi = {
@@ -13,16 +18,23 @@ export const UserApi = {
 export const PostsApi = {
   getGaese: () => instance.get("/post/list"),
   getDetailGaese: (postId) => instance.get(`/post/${postId}`),
+
   postGaese: (payload) => instance.post("/posts/write", payload),
   deleteGaesel: (postId) => instance.delete(`/post/${postId}`),
+
   patchGaese: (postId, edit) =>
     instance.patch(`/posts/${postId}`, { postComment: edit }),
 };
 export const CommentsApi = {
   getComments: (postId) => instance.get(`/comments/${postId}`),
   getDetailGaese: (postId) => instance.get(`/post/${postId}`),
-  postComments: (postId, payload) =>
-    instance.post(`/comments/${postId}`, payload),
+  postComments: (payload) =>
+    instance.post(`/comments/${payload.postId}`, payload.comment, {
+      headers: {
+        Authorization: payload.token,
+      },
+    }),
+
   deleteComments: (postId, cmtId) =>
     instance.delete(`/comments/${postId}/${cmtId}`),
   patchComments: (postId, cmtId, edit) =>
