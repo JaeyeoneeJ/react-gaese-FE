@@ -1,18 +1,22 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import usePost from "../../hooks/usePost";
 import Button from "../elements/Button";
+
 import { FaImage } from "react-icons/fa";
 import { clearPost, __addPost, __getPost } from "../../redux/modules/postSlice";
 import { useDropzone } from "react-dropzone";
 import { useCookies } from "react-cookie";
+
 const AddPost = () => {
   const [cookies] = useCookies(["token"]);
   console.log(cookies);
   const post = useSelector((state) => state.post);
+
   const {isSuccess} = useSelector((state) => state.post);
+
   const navigate = useNavigate();
   const [value, onChangeHandler, resetValue] = usePost();
   const dispatch = useDispatch();
@@ -69,8 +73,8 @@ const AddPost = () => {
 
     dispatch(__addPost({ cookies, formData }));
 
-    
-  };
+
+   
   useEffect(()=> {
     if(isSuccess===true) {
       if (
@@ -114,7 +118,8 @@ const AddPost = () => {
           {isup ? (
             <div className="preview">{thumb}</div>
           ) : (
-            <FaImage size={80} color="#d9d9d9" />
+            <div>dd</div>
+            // <FaImage size={80} color="#d9d9d9" />
           )}
 
           <Button width="120px" bgColor="#AF93FF" border="none" color="white">

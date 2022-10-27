@@ -13,7 +13,9 @@ const HomeMenu = () => {
         <FaAngleRight size="30" color="#1a73e8" />
       </HomeMenuBtn>
       <HomeMenuBtn onClick={() => navigate("/posts/add")}>
+
         <HomeMenuTitle>Post Add 이동</HomeMenuTitle>
+
         <FaAngleRight size="30" color="#1a73e8" />
       </HomeMenuBtn>
     </HomeMenuCtn>
